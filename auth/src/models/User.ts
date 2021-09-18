@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { Password } from "../services/password";
 
 interface UserAttributes {
-  email: string;
+  username: string;
   password: string;
+  image: Express.Multer.File;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
@@ -11,16 +12,16 @@ interface UserModel extends mongoose.Model<UserDoc> {
 }
 
 interface UserDoc extends mongoose.Document {
-  email: string;
+  username: string;
   password: string;
-  cart: string[];
+  image: Express.Multer.File;
 }
 
 const UserSchema = new mongoose.Schema(
   {
-    email: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }],
+    image: Schema.Types.Mixed,
   },
   {
     toJSON: {

@@ -10,14 +10,16 @@ const router = express.Router();
 router.post(
   "/api/users/signin",
   [
-    body("email").isEmail().withMessage("Email must be valid"),
+    body("username")
+      .isLength({ min: 4, max: 20 })
+      .withMessage("Username must be valid"),
     body("password").trim().notEmpty().withMessage("Password must be provided"),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { email, password } = req.body;
-      const existingUser = await User.findOne({ email });
+      const { username, password } = req.body;
+      const existingUser = await User.findOne({ username });
       if (!existingUser) {
         throw new BadRequestError("Invalid credentials");
       }

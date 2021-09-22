@@ -17,3 +17,19 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: jubri7/cart
+      context: cart
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: jubri7/items
+      context: items
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

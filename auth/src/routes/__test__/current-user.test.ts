@@ -9,11 +9,11 @@ it("responds with detail about user", async () => {
       password: "test",
     })
     .expect(201);
-  const cookiee = authHeader.get("Set-Cookie");
+  const cookie = authHeader.get("Set-Cookie");
 
   const response = await request(app)
     .get("/api/users/currentuser")
-    .set("Cookie", cookiee)
+    .set("Cookie", cookie)
     .send()
     .expect(200);
 

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-mongo-depl
+spec:
+  selector:
+    matchLabels:
+      app: cart-mongo
+  template:
+    metadata:
+      labels:
+        app: cart-mongo
+    spec:
+      containers:
+      - name: cart-mongo
+        image: mongo:4.4.6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart-mongo-service
+spec:
+  selector:
+    app: cart-mongo
+  ports:
+  - port: 27017
+    targetPort: 27017
+    name: db
+

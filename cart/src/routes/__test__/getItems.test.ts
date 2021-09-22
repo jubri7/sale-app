@@ -10,11 +10,13 @@ it("deletes item and returns 200", async () => {
     name: "avs",
     price: 10,
     id: new mongoose.Types.ObjectId().toHexString(),
+    image: Buffer.from("adasdasd"),
   });
   const item2 = Item.build({
     name: "avs",
     price: 10,
     id: new mongoose.Types.ObjectId().toHexString(),
+    image: Buffer.from("adasdasd"),
   });
   const cart = await Cart.build({ userId });
   cart.items.push(item1.id);

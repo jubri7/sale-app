@@ -1,39 +1,39 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
-import { BadRequestError, validateRequest, upload } from "@jugitix/common";
+import { BadRequestError, validateRequest } from "@jugitix/common";
 import { User } from "../models/User";
 import jwt from "jsonwebtoken";
+import { UserCreatedPublisher } from "../events/publisher/userCreatedPublisher";
+import { natsWrapper } from "../stan";
 
 const router = express.Router();
 
 router.post(
   "/api/users/signup",
   [
-    body("username")
-      .isLength({ min: 4, max: 20 })
-      .withMessage("Username must be valid"),
+    body("email").isEmail().withMessage("Email must be valid"),
     body("password")
       .trim()
       .isLength({ min: 4, max: 20 })
       .withMessage("Password must be between 4 and 20 characters"),
   ],
   validateRequest,
-  upload(process.env.MONGO_URI!).single("file"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { username, password } = req.body;
-      const existingUser = await User.findOne({ username });
+      const { email, password } = req.body;
+      const existingUser = await User.findOne({ email });
       if (existingUser) {
-        throw new BadRequestError("Username in use");
+        throw new BadRequestError("Email in use");
       }
-      if (!req.file) throw new BadRequestError("Image not uploaded");
-
-      const user = User.build({ username, password, image: req.file });
+      const user = User.build({ email, password });
       await user.save();
-
+      new UserCreatedPublisher(natsWrapper.client).publish({
+        id: user.id,
+        email: user.email,
+      });
       const userJwt = jwt.sign(
         {
-          email: user.username,
+          email: user.email,
           id: user._id,
         },
         process.env.JWT_KEY!

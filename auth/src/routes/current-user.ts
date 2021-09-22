@@ -1,5 +1,5 @@
 import express from "express";
-import { currentUser } from "../../../common/src/index";
+import { currentUser } from "@jugitix/common";
 
 const router = express.Router();
 

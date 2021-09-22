@@ -1,6 +1,7 @@
 import {
   BadRequestError,
   NotAuthorizeError,
+  NotFoundError,
   requireAuth,
 } from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";

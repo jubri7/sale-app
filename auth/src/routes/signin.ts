@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
-import { BadRequestError, validateRequest } from "../../../common/src/index";
+import { BadRequestError, validateRequest } from "@jugitix/common";
 import { User } from "../models/User";
 import { Password } from "../services/password";
 import jwt from "jsonwebtoken";
@@ -10,16 +10,14 @@ const router = express.Router();
 router.post(
   "/api/users/signin",
   [
-    body("username")
-      .isLength({ min: 4, max: 20 })
-      .withMessage("Username must be valid"),
+    body("email").isEmail().withMessage("Email must be valid"),
     body("password").trim().notEmpty().withMessage("Password must be provided"),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { username, password } = req.body;
-      const existingUser = await User.findOne({ username });
+      const { email, password } = req.body;
+      const existingUser = await User.findOne({ email });
       if (!existingUser) {
         throw new BadRequestError("Invalid credentials");
       }

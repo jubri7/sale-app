@@ -15,6 +15,14 @@ spec:
       - name: auth
         image: jubri7/auth
         env:
+          - name: NATS_CLIENT_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NATS_URL
+            value: 'http://nats-service:4222'
+          - name: NATS_CLUSTER_ID
+            value: sales
           - name: MONGO_URI
             value: "mongodb://auth-mongo-service:27017/auth"
           - name: JWT_KEY

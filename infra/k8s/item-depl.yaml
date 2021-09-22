@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: items-depl
+spec:
+  selector:
+    matchLabels:
+      app: items
+  template:
+    metadata:
+      labels:
+        app: items
+    spec:
+      containers:
+      - name: items
+        image: jubri7/items
+        env:
+          - name: NATS_CLIENT_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NATS_URL
+            value: 'http://nats-service:4222'
+          - name: NATS_CLUSTER_ID
+            value: sales
+          - name: MONGO_URI
+            value: "mongodb://items-mongo-service:27017/auth"
+          - name: JWT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: jwt-secret
+                key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: items-service
+spec:
+  selector:
+    app: items
+  ports:
+  - port: 3000
+    targetPort: 3000
+

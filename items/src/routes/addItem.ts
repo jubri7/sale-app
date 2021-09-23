@@ -35,6 +35,7 @@ router.post(
         image: item.image,
         price: item.price,
         userId: req.currentUser!.id,
+        name: item.name,
       });
       res.send(item);
     } catch (error) {

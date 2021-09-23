@@ -17,9 +17,18 @@ const connectToApp = async () => {
     process.on("SIGTERM", () => natsWrapper.client.close());
     process.on("SIGINT", () => natsWrapper.client.close());
 
-    await mongoose.connect(process.env.MONGO_URI!, () => {
-      console.log("auth database is connected ");
-    });
+    await mongoose.connect(
+      process.env.MONGO_URI!,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+      },
+      () => {
+        console.log("auth database is connected ");
+      }
+    );
     app.listen(3000, () => {
       console.log("auth-service is online");
     });

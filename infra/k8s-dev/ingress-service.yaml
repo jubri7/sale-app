@@ -24,5 +24,25 @@ spec:
                 name: auth-service
                 port:
                   number: 3000
-
+          - path: /api/items/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: items-service
+                port:
+                  number: 3000
+          - path: /api/payments/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: payments-service
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-service
+                port:
+                  number: 3000
  

@@ -3,7 +3,7 @@ import { Message } from "node-nats-streaming";
 import { Cart } from "../../models/Cart";
 import { cartService } from "./queueGroupName";
 
-export class PaymentCreatedListener extends Listener<UserCreatedEvent> {
+export class UserCreatedListener extends Listener<UserCreatedEvent> {
   subject: Subjects.UserCreated = Subjects.UserCreated;
   queueGroupName = cartService;
 

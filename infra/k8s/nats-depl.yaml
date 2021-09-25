@@ -30,6 +30,8 @@ spec:
               '-SD',
               '-cid',
               'sales',
+              '-mb',
+              '0'
             ]
 ---
 apiVersion: v1

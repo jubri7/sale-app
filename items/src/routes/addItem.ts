@@ -32,7 +32,7 @@ router.post(
       await item.save();
       new ItemCreatedPublisher(natsWrapper.client).publish({
         id: item.id,
-        image: item.image,
+        image: req.file.buffer,
         price: item.price,
         userId: req.currentUser!.id,
         name: item.name,

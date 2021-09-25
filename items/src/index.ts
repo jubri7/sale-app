@@ -1,6 +1,7 @@
 import { app } from "./app";
 import mongoose from "mongoose";
 import { natsWrapper } from "./stan";
+import { PaymentCreatedListener } from "./events/listener/paymentCreatedListener";
 
 const connectToApp = async () => {
   try {
@@ -17,9 +18,20 @@ const connectToApp = async () => {
     process.on("SIGTERM", () => natsWrapper.client.close());
     process.on("SIGINT", () => natsWrapper.client.close());
 
-    await mongoose.connect(process.env.MONGO_URI!, () => {
-      console.log("items database is connected ");
-    });
+    new PaymentCreatedListener(natsWrapper.client).listen();
+
+    await mongoose.connect(
+      process.env.MONGO_URI!,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+      },
+      () => {
+        console.log("items database is connected ");
+      }
+    );
     app.listen(3000, () => {
       console.log("items-service is online");
     });

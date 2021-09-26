@@ -1,6 +1,7 @@
 import { BadRequestError, requireAuth, validateRequest } from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";
 import multer from "multer";
+import { upload } from "../service/upload";
 import { body } from "express-validator";
 import { Item } from "../models/Item";
 import { ItemCreatedPublisher } from "../events/publisher/itemCreatedPublisher";
@@ -11,7 +12,7 @@ const router = express.Router();
 router.post(
   "/api/items",
   requireAuth,
-  multer({ storage: multer.memoryStorage() }).single("file"),
+  multer({ dest: "/upload" }).single("file"),
   [
     body("name").not().isEmpty().withMessage("Name is required"),
     body("price")
@@ -22,17 +23,20 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, price } = req.body;
-      if (!req.file?.buffer) throw new BadRequestError("Upload Image");
+      if (!req.file) throw new BadRequestError("Upload Image");
+      const url = (await upload(req.file)).Location;
+      console.log(url);
+      if (!url) throw new BadRequestError("Something went wrong");
       const item = Item.build({
         name,
         price,
-        image: req.file.buffer,
+        image: url,
         userId: req.currentUser!.id,
       });
       await item.save();
       new ItemCreatedPublisher(natsWrapper.client).publish({
         id: item.id,
-        image: req.file.buffer,
+        image: url,
         price: item.price,
         userId: req.currentUser!.id,
         name: item.name,

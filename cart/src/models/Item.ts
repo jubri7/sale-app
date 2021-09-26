@@ -5,7 +5,7 @@ interface ItemAttributes {
   name: string;
   price: number;
   id: string;
-  image: Buffer;
+  image: string;
 }
 
 interface ItemModel extends mongoose.Model<ItemDoc> {
@@ -15,14 +15,14 @@ interface ItemModel extends mongoose.Model<ItemDoc> {
 interface ItemDoc extends mongoose.Document {
   name: string;
   price: number;
-  image: Buffer;
+  image: string;
 }
 
 const ItemSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     price: { type: String, required: true },
-    image: { type: Buffer },
+    image: { type: String, required: true },
   },
   {
     toJSON: {

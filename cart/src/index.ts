@@ -23,6 +23,7 @@ const connectToApp = async () => {
     new ItemCreatedListener(natsWrapper.client).listen();
     new PaymentCreatedListener(natsWrapper.client).listen();
     new UserCreatedListener(natsWrapper.client).listen();
+
     await mongoose.connect(
       process.env.MONGO_URI!,
       {

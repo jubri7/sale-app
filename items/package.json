@@ -18,10 +18,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jugitix/common": "^1.0.21",
+    "@aws-sdk/client-sts": "^3.34.0",
+    "@jugitix/common": "^1.0.23",
     "@types/cookie-session": "^2.0.43",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.4",
+    "aws-sdk": "^2.995.0",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

@@ -41,11 +41,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: jubri7/client
-      context: client
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
+    # - image: jubri7/client
+    #   context: client
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "src/**/*.ts"
+    #         dest: .

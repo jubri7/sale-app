@@ -30,6 +30,20 @@ spec:
               secretKeyRef:
                 name: jwt-secret
                 key: JWT_KEY
+          - name: AWS_BUCKET_NAME
+            value: 'sales-app-123'
+          - name: AWS_BUCKET_REGION
+            value: 'us-east-1'
+          - name: AWS_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: AWS_ACCESS_KEY
+          - name: AWS_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret2
+                key: AWS_SECRET_KEY
 ---
 apiVersion: v1
 kind: Service

@@ -33,8 +33,8 @@ it("returns a 200 with valid inputs", async () => {
     .send({
       token: "tok_visa",
       itemId: item.id,
-    });
-  console.log(response.body);
+    })
+    .expect(200);
 
   const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
   expect(chargeOptions.amount).toEqual(20 * 100);

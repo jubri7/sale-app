@@ -1,19 +1,16 @@
 import mongoose from "mongoose";
 import { Message } from "node-nats-streaming";
-import { ItemCreatedEvent } from "@jugitix/common";
+import { UserCreatedEvent } from "@jugitix/common";
 import { natsWrapper } from "../../../stan";
-import { ItemCreatedListener } from "../itemCreatedListener";
-import { Item } from "../../../models/Item";
+import { UserCreatedListener } from "../userCreatedListener";
+import { Cart } from "../../../models/Cart";
 
 const setup = async () => {
-  const listener = new ItemCreatedListener(natsWrapper.client);
+  const listener = new UserCreatedListener(natsWrapper.client);
 
-  const data: ItemCreatedEvent["data"] = {
+  const data: UserCreatedEvent["data"] = {
     id: mongoose.Types.ObjectId().toHexString(),
-    userId: "alskdjf",
-    price: 10,
-    image: "test url",
-    name: "afasda",
+    email: "test24@test.com",
   };
 
   // @ts-ignore
@@ -29,9 +26,9 @@ it("replicates the order info", async () => {
 
   await listener.onMessage(data, msg);
 
-  const item = await Item.findOne({ userId: data.userId });
+  const cart = await Cart.findOne({ userId: data.id });
 
-  expect(item!.userId).toEqual(data.userId);
+  expect(cart!.userId).toEqual(data.id);
 });
 
 it("acknowledges the message", async () => {

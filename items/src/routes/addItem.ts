@@ -1,7 +1,7 @@
 import { BadRequestError, requireAuth, validateRequest } from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";
 import multer from "multer";
-import { upload } from "../service/upload";
+import { unlinkFile, upload } from "../service/upload";
 import { body } from "express-validator";
 import { Item } from "../models/Item";
 import { ItemCreatedPublisher } from "../events/publisher/itemCreatedPublisher";
@@ -34,6 +34,7 @@ router.post(
         userId: req.currentUser!.id,
       });
       await item.save();
+      await unlinkFile(req.file.path);
       new ItemCreatedPublisher(natsWrapper.client).publish({
         id: item.id,
         image: url,

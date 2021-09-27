@@ -5,7 +5,9 @@ import {
   requireAuth,
 } from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";
+import { ItemRemovedPublisher } from "../events/publisher/itemRemovePublisher";
 import { Item } from "../models/Item";
+import { natsWrapper } from "../stan";
 
 const router = express.Router();
 
@@ -17,6 +19,9 @@ router.delete(
       const item = await Item.findByIdAndDelete(req.body.itemId);
       if (!item) throw new BadRequestError("Item not found");
       if (item.userId !== req.currentUser?.id) throw new NotAuthorizeError();
+      new ItemRemovedPublisher(natsWrapper.client).publish({
+        id: item.id,
+      });
       res.send(item);
     } catch (error) {
       next(error);

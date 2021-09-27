@@ -9,6 +9,7 @@ declare global {
 }
 
 jest.mock("../stan");
+jest.mock("../service/upload");
 
 let mongo: any;
 beforeAll(async () => {

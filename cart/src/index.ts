@@ -4,6 +4,7 @@ import { natsWrapper } from "./stan";
 import { ItemCreatedListener } from "./events/listeners/itemCreatedListener";
 import { PaymentCreatedListener } from "./events/listeners/paymentCreatedListener";
 import { UserCreatedListener } from "./events/listeners/userCreatedListener";
+import { ItemRemovedListener } from "./events/listeners/itemRemovedListener";
 
 const connectToApp = async () => {
   try {
@@ -21,6 +22,7 @@ const connectToApp = async () => {
     process.on("SIGINT", () => natsWrapper.client.close());
 
     new ItemCreatedListener(natsWrapper.client).listen();
+    new ItemRemovedListener(natsWrapper.client).listen();
     new PaymentCreatedListener(natsWrapper.client).listen();
     new UserCreatedListener(natsWrapper.client).listen();
 

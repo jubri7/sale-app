@@ -12,7 +12,7 @@ const setup = async () => {
     id: mongoose.Types.ObjectId().toHexString(),
     userId: "alskdjf",
     price: 10,
-    image: Buffer.from("sfsdfsdfdsf"),
+    image: "test url",
     name: "absadsdf",
   };
 

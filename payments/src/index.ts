@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 import { ItemCreatedListener } from "./events/listener/itemCreatedListener";
+import { ItemRemovedListener } from "./events/listener/itemRemovedListener";
 import { natsWrapper } from "./stan";
 
 const connectToApp = async () => {
@@ -19,6 +20,7 @@ const connectToApp = async () => {
     process.on("SIGINT", () => natsWrapper.client.close());
 
     new ItemCreatedListener(natsWrapper.client).listen();
+    new ItemRemovedListener(natsWrapper.client).listen();
 
     await mongoose.connect(
       process.env.MONGO_URI!,
@@ -29,11 +31,11 @@ const connectToApp = async () => {
         useCreateIndex: true,
       },
       () => {
-        console.log("payment mongo is connected");
+        console.log("payment database is connected");
       }
     );
     app.listen(3000, () => {
-      console.log("payments service is online");
+      console.log("payments-service is online");
     });
   } catch (error) {
     console.log(error);

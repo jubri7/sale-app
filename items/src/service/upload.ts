@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
-
 import fs from "fs";
+import util from "util";
+
 AWS.config.update({
   region: process.env.AWS_BUCKET_REGION,
   credentials: {
@@ -11,6 +12,8 @@ AWS.config.update({
 });
 
 const s3 = new AWS.S3();
+
+export const unlinkFile = util.promisify(fs.unlink);
 
 export const upload = async (file: Express.Multer.File) => {
   const filestream = fs.createReadStream(file.path);

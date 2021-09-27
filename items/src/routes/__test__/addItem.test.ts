@@ -14,18 +14,11 @@ it("add items and returns 200", async () => {
 
   expect(response.body.name).toEqual("adsad");
   expect(response.body.price).toEqual("10");
-  expect(response.body.image.type).toEqual("Buffer");
+  expect(response.body.image).toEqual("test url");
 });
 
 it("return 401 if user not sign in", async () => {
-  await request(app)
-    .post("/api/items")
-    .send({
-      name: "asfsa",
-      price: 10,
-      image: Buffer.from("sdfsdfsdfdsfs"),
-    })
-    .expect(401);
+  await request(app).post("/api/items").expect(401);
 });
 
 it("return 400 if user provides invalid name or price", async () => {

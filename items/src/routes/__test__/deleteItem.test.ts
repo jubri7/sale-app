@@ -8,7 +8,7 @@ it("returns 200 and deletes item", async () => {
   const item = Item.build({
     name: "aasas",
     price: 10,
-    image: Buffer.from([255, 216, 255, 225, 31, 175, 69, 120, 105, 102, 0, 0]),
+    image: "adsdasdasd",
     userId: user,
   });
   await item.save();
@@ -37,7 +37,7 @@ it("returns 401 if user is not allow to delete item", async () => {
   const item = Item.build({
     name: "aasas",
     price: 10,
-    image: Buffer.from([255, 216, 255, 225, 31, 175, 69, 120, 105, 102, 0, 0]),
+    image: "asdadasdasd",
     userId: user,
   });
   await item.save();

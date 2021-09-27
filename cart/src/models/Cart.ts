@@ -6,8 +6,8 @@ interface CartAttributes {
 }
 
 interface CartDoc extends mongoose.Document {
-  name: string;
   items: mongoose.Schema.Types.ObjectId[];
+  userId: string;
 }
 
 interface CartModel extends mongoose.Model<CartDoc> {

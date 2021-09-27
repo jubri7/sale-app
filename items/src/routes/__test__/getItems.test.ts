@@ -8,13 +8,13 @@ it("returns 200 with a list of all items", async () => {
   const item1 = Item.build({
     name: "aasas",
     price: 10,
-    image: Buffer.from([255, 216, 255, 225, 31, 175, 69, 120, 105, 102, 0, 0]),
+    image: "sdsfsdfsd",
     userId: user,
   });
   const item2 = Item.build({
     name: "aasas",
     price: 10,
-    image: Buffer.from([255, 216, 255, 225, 31, 175, 69, 120, 105, 102, 0, 0]),
+    image: "dfgfhgdfgd",
     userId: user,
   });
   await item1.save();

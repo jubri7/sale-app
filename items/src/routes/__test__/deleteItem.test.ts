@@ -2,6 +2,7 @@ import request from "supertest";
 import mongoose from "mongoose";
 import { app } from "../../app";
 import { Item } from "../../models/Item";
+import { ItemStatus } from "@jugitix/common";
 
 it("returns 200 and deletes item", async () => {
   const user = new mongoose.Types.ObjectId().toHexString();
@@ -10,6 +11,7 @@ it("returns 200 and deletes item", async () => {
     price: 10,
     image: "adsdasdasd",
     userId: user,
+    status: ItemStatus.AwaitingPayment,
   });
   await item.save();
 
@@ -39,6 +41,7 @@ it("returns 401 if user is not allow to delete item", async () => {
     price: 10,
     image: "asdadasdasd",
     userId: user,
+    status: ItemStatus.AwaitingPayment,
   });
   await item.save();
 

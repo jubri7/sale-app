@@ -1,4 +1,5 @@
 import {
+  BadRequestError,
   NotAuthorizeError,
   NotFoundError,
   requireAuth,
@@ -16,28 +17,32 @@ const router = express.Router();
 router.post(
   "/api/payments",
   requireAuth,
-  [body("token").notEmpty(), body("itemId").notEmpty()],
+  [body("token").notEmpty(), body("items").notEmpty()],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
+    let amount = 0;
+    const itemList = [];
     try {
-      const item = await Item.findById(req.body.itemId);
-
-      if (!item) throw new NotFoundError();
-      if (item.userId != req.currentUser!.id) throw new NotAuthorizeError();
+      for (let itemId of req.body.items) {
+        const item = await Item.findById(itemId);
+        if (!item) throw new NotFoundError();
+        itemList.push(item.id);
+        amount += item.price;
+      }
 
       const charge = await stripe.charges.create({
         currency: "usd",
-        amount: item.price * 100,
+        amount: amount * 100,
         source: req.body.token.id,
       });
       const payment = Payment.build({
-        itemId: req.body.itemId,
+        items: itemList,
         stripeId: charge.id,
       });
       await payment.save();
       new PaymentCreatedPublisher(natsWrapper.client).publish({
         id: payment.id,
-        itemId: item.id,
+        items: itemList,
         stripeId: charge.id,
       });
 

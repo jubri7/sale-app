@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+import { ItemStatus } from "@jugitix/common";
 
 interface ItemAttributes {
   name: string;
   price: number;
   image: string;
   userId: string;
+  status: ItemStatus;
 }
 
 interface ItemModel extends mongoose.Model<ItemDoc> {
@@ -17,6 +19,7 @@ interface ItemDoc extends mongoose.Document {
   price: number;
   image: string;
   userId: string;
+  status: ItemStatus;
 }
 
 const ItemSchema = new mongoose.Schema(
@@ -25,6 +28,7 @@ const ItemSchema = new mongoose.Schema(
     price: { type: String, required: true },
     image: { type: String, required: true },
     userId: { type: String, required: true },
+    status: { type: String, require: true },
   },
   {
     toJSON: {

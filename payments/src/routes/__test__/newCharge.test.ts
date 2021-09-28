@@ -13,7 +13,7 @@ it("returns a 404 when purchasing an order that does not exist", async () => {
     .set("Cookie", global.signin())
     .send({
       token: "asldkfj",
-      itemId: mongoose.Types.ObjectId().toHexString(),
+      items: [mongoose.Types.ObjectId().toHexString()],
     })
     .expect(404);
 });
@@ -29,10 +29,10 @@ it("returns a 200 with valid inputs", async () => {
 
   const response = await request(app)
     .post("/api/payments")
-    .set("Cookie", global.signin(userId))
+    .set("Cookie", global.signin())
     .send({
       token: "tok_visa",
-      itemId: item.id,
+      items: [item.id],
     })
     .expect(200);
 

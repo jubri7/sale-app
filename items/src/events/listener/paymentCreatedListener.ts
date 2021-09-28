@@ -1,4 +1,10 @@
-import { Listener, PaymentCreatedEvent, Subjects } from "@jugitix/common";
+import {
+  BadRequestError,
+  ItemStatus,
+  Listener,
+  PaymentCreatedEvent,
+  Subjects,
+} from "@jugitix/common";
 import { Message } from "node-nats-streaming";
 import { Item } from "../../models/Item";
 import { itemService } from "./queueGroupName";
@@ -8,7 +14,10 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
   queueGroupName = itemService;
 
   async onMessage(data: PaymentCreatedEvent["data"], msg: Message) {
-    await Item.deleteOne({ id: data.itemId });
+    const item = await Item.findOne({ id: data.itemId });
+    if (!item) throw new BadRequestError("Item not found");
+    item.set("status", ItemStatus.Purchased);
+    await item.save();
 
     msg.ack();
   }

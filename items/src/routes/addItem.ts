@@ -1,4 +1,9 @@
-import { BadRequestError, requireAuth, validateRequest } from "@jugitix/common";
+import {
+  BadRequestError,
+  ItemStatus,
+  requireAuth,
+  validateRequest,
+} from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";
 import multer from "multer";
 import { unlinkFile, upload } from "../service/upload";
@@ -25,13 +30,13 @@ router.post(
       const { name, price } = req.body;
       if (!req.file) throw new BadRequestError("Upload Image");
       const url = (await upload(req.file)).Location;
-      console.log(url);
       if (!url) throw new BadRequestError("Something went wrong");
       const item = Item.build({
         name,
         price,
         image: url,
         userId: req.currentUser!.id,
+        status: ItemStatus.AwaitingPayment,
       });
       await item.save();
       await unlinkFile(req.file.path);

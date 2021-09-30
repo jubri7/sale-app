@@ -44,6 +44,8 @@ spec:
               secretKeyRef:
                 name: aws-secret2
                 key: AWS_SECRET_KEY
+          - name: REDIS_HOST
+            value: items-redis-service
 ---
 apiVersion: v1
 kind: Service
@@ -55,4 +57,3 @@ spec:
   ports:
   - port: 3000
     targetPort: 3000
-

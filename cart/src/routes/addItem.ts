@@ -16,6 +16,9 @@ router.post(
 
       if (!item) throw new BadRequestError("Item not found");
 
+      if (cart.items.includes(item.id))
+        throw new BadRequestError("Item already in cart");
+
       cart.items.push(item.id);
       await cart.save();
 

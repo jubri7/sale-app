@@ -4,7 +4,7 @@ import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 interface ItemAttributes {
   name: string;
   price: number;
-  id: string;
+  _id: string;
   image: string;
 }
 
@@ -20,6 +20,7 @@ interface ItemDoc extends mongoose.Document {
 
 const ItemSchema = new mongoose.Schema(
   {
+    _id: { type: String, required: true },
     name: { type: String, required: true },
     price: { type: String, required: true },
     image: { type: String, required: true },

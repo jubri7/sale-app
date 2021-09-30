@@ -14,7 +14,7 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
 
   async onMessage(data: PaymentCreatedEvent["data"], msg: Message) {
     for (let id of data.items) {
-      const item = await await Item.findByIdAndDelete(id);
+      const item = await Item.findByIdAndDelete(id);
       if (!item) throw new BadRequestError("Item not found");
     }
 

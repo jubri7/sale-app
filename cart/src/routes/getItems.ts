@@ -16,10 +16,10 @@ router.get(
 
       cart.items.filter(async (itemId) => {
         let item = await Item.findById(itemId);
-        if (item) return true;
-        else return false;
+        item ? true : false;
       });
       await cart.save();
+      console.log(cart);
 
       res.send(cart);
     } catch (error) {

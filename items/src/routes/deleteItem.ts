@@ -1,12 +1,12 @@
 import {
   BadRequestError,
   NotAuthorizeError,
-  NotFoundError,
   requireAuth,
 } from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";
 import { ItemRemovedPublisher } from "../events/publisher/itemRemovePublisher";
 import { Item } from "../models/Item";
+import { redisClient } from "../redis";
 import { natsWrapper } from "../stan";
 
 const router = express.Router();
@@ -22,6 +22,7 @@ router.delete(
       new ItemRemovedPublisher(natsWrapper.client).publish({
         id: item.id,
       });
+      redisClient.client.del(item.id);
       res.send(item);
     } catch (error) {
       next(error);

@@ -12,7 +12,7 @@ export class ItemCreatedListener extends Listener<ItemCreatedEvent> {
       name: data.name,
       price: data.price,
       image: data.image,
-      id: data.id,
+      _id: data.id,
     });
     await item.save();
 

@@ -9,7 +9,7 @@ export class ItemCreatedListener extends Listener<ItemCreatedEvent> {
 
   async onMessage(data: ItemCreatedEvent["data"], msg: Message) {
     const item = Item.build({
-      id: data.id,
+      _id: data.id,
       price: data.price,
       userId: data.userId,
     });

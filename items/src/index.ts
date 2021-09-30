@@ -2,6 +2,7 @@ import { app } from "./app";
 import mongoose from "mongoose";
 import { natsWrapper } from "./stan";
 import { PaymentCreatedListener } from "./events/listener/paymentCreatedListener";
+import { redisClient } from "./redis";
 
 const connectToApp = async () => {
   try {
@@ -19,6 +20,8 @@ const connectToApp = async () => {
     process.on("SIGINT", () => natsWrapper.client.close());
 
     new PaymentCreatedListener(natsWrapper.client).listen();
+
+    await redisClient.connect(process.env.REDIS_HOST!);
 
     await mongoose.connect(
       process.env.MONGO_URI!,

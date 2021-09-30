@@ -11,6 +11,7 @@ import { body } from "express-validator";
 import { Item } from "../models/Item";
 import { ItemCreatedPublisher } from "../events/publisher/itemCreatedPublisher";
 import { natsWrapper } from "../stan";
+import { redisClient } from "../redis";
 
 const router = express.Router();
 
@@ -47,6 +48,8 @@ router.post(
         userId: req.currentUser!.id,
         name: item.name,
       });
+      redisClient.write(item.id, JSON.stringify(item));
+      redisClient.client.del("items");
       res.send(item);
     } catch (error) {
       next(error);

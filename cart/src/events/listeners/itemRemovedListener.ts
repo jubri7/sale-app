@@ -8,7 +8,7 @@ export class ItemRemovedListener extends Listener<ItemRemovedEvent> {
   queueGroupName = cartService;
 
   async onMessage(data: ItemRemovedEvent["data"], msg: Message) {
-    const item = Item.findOneAndDelete({ id: data.id });
+    const item = Item.findOneAndDelete({ _id: data.id });
 
     msg.ack();
   }

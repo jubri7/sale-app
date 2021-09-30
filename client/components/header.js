@@ -6,7 +6,6 @@ const Header = ({ currentUser }) => {
     !currentUser && { label: "Sign Up", href: "/auth/signup" },
     !currentUser && { label: "Sign In", href: "/auth/signin" },
     currentUser && { label: 'Sell Item', href: '/items/new' },
-    currentUser && { label: 'My Items', href: '/items/myitems' },
     currentUser && { label: 'Cart', href: '/cart' },
     currentUser && { label: 'Sign Out', href: '/auth/signout' },
   ]

@@ -9,6 +9,7 @@ declare global {
 }
 
 jest.mock("../stan");
+jest.mock("../redis");
 jest.mock("../service/upload");
 
 let mongo: any;

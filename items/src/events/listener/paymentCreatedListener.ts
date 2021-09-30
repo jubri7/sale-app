@@ -14,10 +14,12 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
   queueGroupName = itemService;
 
   async onMessage(data: PaymentCreatedEvent["data"], msg: Message) {
-    const item = await Item.findOne({ id: data.itemId });
-    if (!item) throw new BadRequestError("Item not found");
-    item.set("status", ItemStatus.Purchased);
-    await item.save();
+    for (let id of data.items) {
+      const item = await Item.findById(id);
+      if (!item) throw new BadRequestError("Item not found");
+      item.set("status", ItemStatus.Purchased);
+      await item.save();
+    }
 
     msg.ack();
   }

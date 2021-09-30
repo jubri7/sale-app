@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 import { ItemCreatedListener } from "./events/listener/itemCreatedListener";
 import { ItemRemovedListener } from "./events/listener/itemRemovedListener";
+import { Item } from "./models/Item";
 import { natsWrapper } from "./stan";
 
 const connectToApp = async () => {

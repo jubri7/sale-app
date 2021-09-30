@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: items-redis-depl
+spec:
+  selector:
+    matchLabels:
+      app: items-redis
+  template:
+    metadata:
+      labels:
+        app: items-redis
+    spec:
+      containers:
+      - name: items-redis
+        image: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: items-redis-service
+spec:
+  selector:
+    app: items-redis
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: redis
+

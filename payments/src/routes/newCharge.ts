@@ -20,12 +20,12 @@ router.post(
   [body("token").notEmpty(), body("items").notEmpty()],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    let amount = 0;
-    const itemList = [];
+    let amount: number = 0;
+    const itemList: string[] = [];
     try {
-      for (let itemId of req.body.items) {
-        const item = await Item.findById(itemId);
-        if (!item) throw new NotFoundError();
+      for (let id of req.body.items) {
+        const item = await Item.findById(id);
+        if (!item) throw new BadRequestError("Item not found");
         itemList.push(item.id);
         amount += item.price;
       }
@@ -45,7 +45,9 @@ router.post(
         items: itemList,
         stripeId: charge.id,
       });
-
+      for (let item of itemList) {
+        await Item.findByIdAndDelete(item);
+      }
       res.send(payment);
     } catch (error) {
       next(error);

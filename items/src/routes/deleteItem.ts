@@ -23,6 +23,7 @@ router.delete(
         id: item.id,
       });
       redisClient.client.del(item.id);
+      redisClient.client.del("items");
       res.send(item);
     } catch (error) {
       next(error);

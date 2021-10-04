@@ -16,7 +16,7 @@ interface PaymentModel extends mongoose.Model<PaymentDoc> {
 
 const paymentSchema = new mongoose.Schema(
   {
-    item: {
+    items: {
       required: true,
       type: Array,
     },
@@ -36,10 +36,7 @@ const paymentSchema = new mongoose.Schema(
 );
 
 paymentSchema.statics.build = (attrs: PaymentAttrs) => {
-  return new Payment({
-    itemId: attrs.items,
-    stripeId: attrs.stripeId,
-  });
+  return new Payment(attrs);
 };
 
 const Payment = mongoose.model<PaymentDoc, PaymentModel>(

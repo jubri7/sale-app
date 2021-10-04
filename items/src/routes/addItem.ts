@@ -6,7 +6,7 @@ import {
 } from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";
 import multer from "multer";
-import { unlinkFile, upload } from "../service/upload";
+import { UploadImage } from "../service/upload";
 import { body } from "express-validator";
 import { Item } from "../models/Item";
 import { ItemCreatedPublisher } from "../events/publisher/itemCreatedPublisher";
@@ -30,7 +30,7 @@ router.post(
     try {
       const { name, price } = req.body;
       if (!req.file) throw new BadRequestError("Upload Image");
-      const url = (await upload(req.file)).Location;
+      const url = await UploadImage.upload(req.file);
       if (!url) throw new BadRequestError("Something went wrong");
       const item = Item.build({
         name,
@@ -40,7 +40,7 @@ router.post(
         status: ItemStatus.AwaitingPayment,
       });
       await item.save();
-      await unlinkFile(req.file.path);
+      await UploadImage.unlinkFile(req.file.path);
       new ItemCreatedPublisher(natsWrapper.client).publish({
         id: item.id,
         image: url,
@@ -48,8 +48,9 @@ router.post(
         userId: req.currentUser!.id,
         name: item.name,
       });
-      redisClient.write(item.id, JSON.stringify(item));
-      redisClient.client.del("items");
+      const a = await redisClient.write(item.id, JSON.stringify(item));
+      const b = redisClient.client.del("items");
+      console.log("write:" + a, "delete:" + b);
       res.send(item);
     } catch (error) {
       next(error);

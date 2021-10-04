@@ -19,7 +19,6 @@ router.get(
         item ? true : false;
       });
       await cart.save();
-      console.log(cart);
 
       res.send(cart);
     } catch (error) {

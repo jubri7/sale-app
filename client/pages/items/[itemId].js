@@ -1,4 +1,4 @@
-import useRequest from "../../hooks/useRequest"
+import useRequest from "../hooks/useRequest"
 import Router from "next/router";
 import StripeCheckout from 'react-stripe-checkout';
 
@@ -18,7 +18,7 @@ const ItemShow = ({ item,currentUser }) => {
       url:"/api/payments",
       method:"post",
       body:{
-        items: [item.id],
+        items: [item],
         token:token
       }
       })
@@ -26,12 +26,14 @@ const ItemShow = ({ item,currentUser }) => {
   }
 
   return (
-    <div>
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
       <h1>{item.name}</h1>
       <img src={item.image} style={{width:"80%",height:"30%"}}></img>
       <h4>Price:$ {item.price}</h4>
       {errors}
+      <div style={{marginBottom:"10px"}}>
         <button onClick={handleClick} className="btn btn-primary">Add to cart</button>
+      </div>
         <StripeCheckout
         
             token={(token) => submitPayment(token)}

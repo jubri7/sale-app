@@ -9,10 +9,8 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const cachedItem = await redisClient.read(req.params.id);
-      console.log(cachedItem);
-      console.log(2);
-      if (cachedItem) res.send(JSON.parse(cachedItem));
-      console.log(3);
+      console.log("read:" + cachedItem);
+      if (cachedItem) return res.send(JSON.parse(cachedItem));
 
       const item = await Item.findById(req.params.id);
       if (!item) throw new BadRequestError("Item not found");

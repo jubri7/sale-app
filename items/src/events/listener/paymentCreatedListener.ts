@@ -7,6 +7,7 @@ import {
 } from "@jugitix/common";
 import { Message } from "node-nats-streaming";
 import { Item } from "../../models/Item";
+import { redisClient } from "../../redis";
 import { itemService } from "./queueGroupName";
 
 export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
@@ -19,6 +20,8 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
       if (!item) throw new BadRequestError("Item not found");
       item.set("status", ItemStatus.Purchased);
       await item.save();
+      redisClient.client.del(item.id);
+      redisClient.client.del("items");
     }
 
     msg.ack();

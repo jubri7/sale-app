@@ -13,7 +13,7 @@ class Redis {
   }
 
   connect(url: string) {
-    this._client = redis.createClient(url);
+    this._client = redis.createClient({ host: url });
     return new Promise<void>((resolve, reject) => {
       this.client.on("connect", () => {
         console.log("Connected to Redis ");
@@ -26,12 +26,12 @@ class Redis {
   }
 
   async read(key: string) {
-    const get = promisify(this.client.get);
+    const get = promisify(this.client.get).bind(this.client);
     return await get(key);
   }
 
   async write(key: string, value: string) {
-    const set = promisify(this.client.setex);
+    const set = promisify(this.client.setex).bind(this.client);
     return await set(key, 1800, value);
   }
 }

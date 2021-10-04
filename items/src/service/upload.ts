@@ -13,14 +13,18 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-export const unlinkFile = util.promisify(fs.unlink);
-
-export const upload = async (file: Express.Multer.File) => {
-  const filestream = fs.createReadStream(file.path);
-  const uploadParams = {
-    Bucket: process.env.AWS_BUCKET_NAME!,
-    Key: file.filename,
-    Body: filestream,
-  };
-  return s3.upload(uploadParams).promise();
-};
+export class UploadImage {
+  static async upload(file: Express.Multer.File) {
+    const filestream = fs.createReadStream(file.path);
+    const uploadParams = {
+      Bucket: process.env.AWS_BUCKET_NAME!,
+      Key: file.filename,
+      Body: filestream,
+    };
+    return (await s3.upload(uploadParams).promise()).Location;
+  }
+  static unlinkFile(path: fs.PathLike) {
+    const remove = util.promisify(fs.unlink);
+    return remove(path);
+  }
+}

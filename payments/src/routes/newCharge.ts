@@ -20,33 +20,33 @@ router.post(
   [body("token").notEmpty(), body("items").notEmpty()],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    let amount: number = 0;
-    const itemList: string[] = [];
     try {
-      for (let id of req.body.items) {
-        const item = await Item.findById(id);
-        if (!item) throw new BadRequestError("Item not found");
-        itemList.push(item.id);
-        amount += item.price;
+      let money: number = 0.0;
+      const idList = [];
+      for (const listItem of req.body.items) {
+        const item = await Item.findById(listItem.id);
+        if (!item) throw new BadRequestError(`Item not found`);
+        idList.push(item.id);
+        money += item.price;
       }
-
       const charge = await stripe.charges.create({
         currency: "usd",
-        amount: amount * 100,
+        amount: money * 100,
         source: req.body.token.id,
       });
       const payment = Payment.build({
-        items: itemList,
+        items: idList,
         stripeId: charge.id,
       });
       await payment.save();
       new PaymentCreatedPublisher(natsWrapper.client).publish({
         id: payment.id,
-        items: itemList,
+        items: idList,
         stripeId: charge.id,
+        userId: req.currentUser!.id,
       });
-      for (let item of itemList) {
-        await Item.findByIdAndDelete(item);
+      for (let id of idList) {
+        await Item.findByIdAndDelete(id);
       }
       res.send(payment);
     } catch (error) {

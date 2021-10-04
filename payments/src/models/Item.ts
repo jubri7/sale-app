@@ -19,7 +19,7 @@ interface ItemDoc extends mongoose.Document {
 const ItemSchema = new mongoose.Schema(
   {
     _id: { type: String, required: true },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
     userId: { type: String, required: true },
   },
   {

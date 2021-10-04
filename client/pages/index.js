@@ -10,7 +10,7 @@ const Landing = ({currentUser,items}) =>{
             <td><img src={item.image} style={{width:"80%",height:40}}/></td>
             <td>
               <Link href="/items/[itemId]" as={`/items/${item.id}`}>
-                <a>Buy</a>
+                <a><button className="btn btn-primary btn-small">Buy</button></a>
               </Link>
             </td>
           </tr>
@@ -25,6 +25,7 @@ const Landing = ({currentUser,items}) =>{
               <tr>
                 <th>Name</th>
                 <th>Price</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>

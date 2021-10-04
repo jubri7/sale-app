@@ -5,7 +5,7 @@ import { NotFoundError, requireAuth } from "@jugitix/common";
 const router = express.Router();
 
 router.delete(
-  "/api/cart",
+  "/api/cart/:id",
   requireAuth,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -13,7 +13,7 @@ router.delete(
 
       if (!cart) throw new NotFoundError();
 
-      cart.items = cart.items.filter((id) => id != req.body.itemId);
+      cart.items = cart.items.filter((id) => String(id) != req.params.id);
       await cart.save();
 
       res.send(cart);

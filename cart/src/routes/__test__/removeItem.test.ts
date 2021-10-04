@@ -9,13 +9,13 @@ it("deletes item and returns 200", async () => {
   const item1 = Item.build({
     name: "avs",
     price: 10,
-    id: new mongoose.Types.ObjectId().toHexString(),
+    _id: new mongoose.Types.ObjectId().toHexString(),
     image: "test url",
   });
   const item2 = Item.build({
     name: "avs",
     price: 10,
-    id: new mongoose.Types.ObjectId().toHexString(),
+    _id: new mongoose.Types.ObjectId().toHexString(),
     image: "test url",
   });
   const cart = await Cart.build({ userId });
@@ -26,18 +26,26 @@ it("deletes item and returns 200", async () => {
   await cart.save();
 
   const response = await request(app)
-    .delete("/api/cart")
+    .delete(`/api/cart/${item2.id}`)
     .set("Cookie", global.signin(userId))
-    .send({ itemId: item2.id })
+    .send()
     .expect(200);
 
   expect(response.body.items[0]).toEqual(item1.id);
 });
 
 it("returns 400 if cart not found", async () => {
+  const userId = new mongoose.Types.ObjectId().toHexString();
+  const item = Item.build({
+    name: "avs",
+    price: 10,
+    _id: new mongoose.Types.ObjectId().toHexString(),
+    image: "test url",
+  });
+  await item.save();
   await request(app)
-    .post("/api/cart")
-    .set("Cookie", global.signin())
-    .send({ itemId: new mongoose.Types.ObjectId().toHexString() })
+    .delete(`/api/cart/${item.id}`)
+    .set("Cookie", global.signin(userId))
+    .send()
     .expect(400);
 });

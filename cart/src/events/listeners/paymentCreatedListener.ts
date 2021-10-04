@@ -20,7 +20,7 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
       removedItems[id] = true;
     }
     const cart = await Cart.findOne({ userId: data.userId });
-    if (!cart) throw new Error("Cart not found");
+    if (!cart) return msg.ack();
 
     cart.items = cart.items.filter((id: any) => {
       return !(String(id) in removedItems);

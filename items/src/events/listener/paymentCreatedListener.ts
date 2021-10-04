@@ -21,8 +21,8 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
       item.set("status", ItemStatus.Purchased);
       await item.save();
       redisClient.client.del(item.id);
-      redisClient.client.del("items");
     }
+    redisClient.client.del("items");
 
     msg.ack();
   }

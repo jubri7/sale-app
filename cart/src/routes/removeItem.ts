@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction, response } from "express";
 import { Cart } from "../models/Cart";
 import { Item } from "../models/Item";
-import { NotFoundError, requireAuth } from "@jugitix/common";
+import { BadRequestError, NotFoundError, requireAuth } from "@jugitix/common";
 const router = express.Router();
 
 router.delete(
@@ -11,7 +11,7 @@ router.delete(
     try {
       const cart = await Cart.findOne({ userId: req.currentUser?.id });
 
-      if (!cart) throw new NotFoundError();
+      if (!cart) throw new BadRequestError("Cart not found");
 
       cart.items = cart.items.filter((id) => String(id) != req.params.id);
       await cart.save();

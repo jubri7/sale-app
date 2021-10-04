@@ -1,10 +1,4 @@
-import {
-  BadRequestError,
-  NotAuthorizeError,
-  NotFoundError,
-  requireAuth,
-  validateRequest,
-} from "@jugitix/common";
+import { BadRequestError, validateRequest } from "@jugitix/common";
 import express, { Response, Request, NextFunction } from "express";
 import { body } from "express-validator";
 import { PaymentCreatedPublisher } from "../events/publisher/paymentCreatedPublisher";
@@ -16,7 +10,6 @@ const router = express.Router();
 
 router.post(
   "/api/payments",
-  requireAuth,
   [body("token").notEmpty(), body("items").notEmpty()],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -43,7 +36,7 @@ router.post(
         id: payment.id,
         items: idList,
         stripeId: charge.id,
-        userId: req.currentUser!.id,
+        userId: req.currentUser ? req.currentUser.id : req.body.token.email,
       });
       for (let id of idList) {
         await Item.findByIdAndDelete(id);

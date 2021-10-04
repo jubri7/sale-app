@@ -16,9 +16,9 @@ it("returns 200 and deletes item", async () => {
   await item.save();
 
   await request(app)
-    .delete("/api/items")
+    .delete(`/api/items/${item.id}`)
     .set("Cookie", global.signin(user))
-    .send({ itemId: item.id })
+    .send()
     .expect(200);
 
   const items = await Item.find({});
@@ -28,9 +28,9 @@ it("returns 200 and deletes item", async () => {
 
 it("returns 400 if item does not exist", async () => {
   await request(app)
-    .delete("/api/items")
+    .delete(`/api/items/${new mongoose.Types.ObjectId().toHexString()}`)
     .set("Cookie", global.signin())
-    .send({ itemId: new mongoose.Types.ObjectId().toHexString() })
+    .send()
     .expect(400);
 });
 
@@ -46,8 +46,8 @@ it("returns 401 if user is not allow to delete item", async () => {
   await item.save();
 
   await request(app)
-    .delete("/api/items")
+    .delete(`/api/items/${item.id}`)
     .set("Cookie", global.signin())
-    .send({ itemId: item.id })
+    .send()
     .expect(401);
 });

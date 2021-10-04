@@ -12,11 +12,11 @@ import { natsWrapper } from "../stan";
 const router = express.Router();
 
 router.delete(
-  "/api/items",
+  "/api/items/:id",
   requireAuth,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const item = await Item.findByIdAndDelete(req.body.itemId);
+      const item = await Item.findByIdAndDelete(req.params.id);
       if (!item) throw new BadRequestError("Item not found");
       if (item.userId !== req.currentUser?.id) throw new NotAuthorizeError();
       new ItemRemovedPublisher(natsWrapper.client).publish({

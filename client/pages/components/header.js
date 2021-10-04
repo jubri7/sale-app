@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 
 const Header = ({ currentUser }) => {
+  useEffect(()=>{},[currentUser])
   const links = [
     !currentUser && { label: "Sign Up", href: "/auth/signup" },
     !currentUser && { label: "Sign In", href: "/auth/signin" },

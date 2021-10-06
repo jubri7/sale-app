@@ -1,5 +1,4 @@
 import { Listener, PaymentCreatedEvent, Subjects } from "@jugitix/common";
-import { ObjectId } from "mongoose";
 import { Message } from "node-nats-streaming";
 import { Cart } from "../../models/Cart";
 import { Item } from "../../models/Item";

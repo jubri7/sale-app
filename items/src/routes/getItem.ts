@@ -9,7 +9,6 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const cachedItem = await redisClient.read(req.params.id);
-      console.log("read:" + cachedItem);
       if (cachedItem) return res.send(JSON.parse(cachedItem));
 
       const item = await Item.findById(req.params.id);

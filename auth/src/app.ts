@@ -17,10 +17,6 @@ app.use(
   })
 );
 
-app.get("/api/users/home", (req, res) => {
-  res.send("hi");
-});
-
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);

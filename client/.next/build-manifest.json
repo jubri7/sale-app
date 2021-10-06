@@ -1,38 +1,82 @@
 {
   "polyfillFiles": [
-    "static/chunks/polyfills.js"
+    "static/chunks/polyfills-a40ef1678bae11e696dba45124eadd70.js"
   ],
-  "devFiles": [
-    "static/chunks/react-refresh.js"
-  ],
-  "ampDevFiles": [
-    "static/chunks/webpack.js",
-    "static/chunks/amp.js"
-  ],
+  "devFiles": [],
+  "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
+    "static/mxCijqx1m5OmEBUwoOkZG/_buildManifest.js",
+    "static/mxCijqx1m5OmEBUwoOkZG/_ssgManifest.js"
   ],
   "pages": {
     "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/index-6d63d82ef8908cf517a7.js"
     ],
     "/_app": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_app.js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/css/82db0d0792c1df055fa1.css",
+      "static/chunks/pages/_app-0bf6c15cc5250a036958.js"
     ],
     "/_error": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_error.js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/_error-737a04e9a0da63c9d162.js"
     ],
-    "/next/dist/pages/_error": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/next/dist/pages/_error.js"
+    "/auth/signin": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/auth/signin-157bf6af4761698b81da.js"
+    ],
+    "/auth/signout": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/auth/signout-799a166fa1b0272e17e3.js"
+    ],
+    "/auth/signup": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/auth/signup-5043bcf75e2f3d6d6e49.js"
+    ],
+    "/cart/mycart": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/244-bae8521600b2eccede91.js",
+      "static/chunks/pages/cart/mycart-1ef9a982be1da5b48bac.js"
+    ],
+    "/components/header": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/components/header-912c45c8ea345554bd79.js"
+    ],
+    "/hooks/useRequest": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/hooks/useRequest-446e308bcfe8dc8bfa44.js"
+    ],
+    "/items/[itemId]": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/244-bae8521600b2eccede91.js",
+      "static/chunks/pages/items/[itemId]-6b52b8e23cbefa166bf5.js"
+    ],
+    "/items/new": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-0441fae7fd130f37dee1.js",
+      "static/chunks/main-62b8caa3ccc47893b147.js",
+      "static/chunks/pages/items/new-0c28afe131536a64e583.js"
     ]
   },
   "ampFirstPages": []

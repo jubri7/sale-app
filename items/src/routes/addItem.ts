@@ -48,9 +48,8 @@ router.post(
         userId: req.currentUser!.id,
         name: item.name,
       });
-      const a = await redisClient.write(item.id, JSON.stringify(item));
-      const b = redisClient.client.del("items");
-      console.log("write:" + a, "delete:" + b);
+      await redisClient.write(item.id, JSON.stringify(item));
+      redisClient.client.del("items");
       res.send(item);
     } catch (error) {
       next(error);

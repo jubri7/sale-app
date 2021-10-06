@@ -38,5 +38,3 @@ const connectToApp = async () => {
 };
 
 connectToApp();
-
-//

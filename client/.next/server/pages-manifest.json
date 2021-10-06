@@ -1,7 +1,15 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
+  "/api/build-client": "pages/api/build-client.js",
+  "/auth/signin": "pages/auth/signin.js",
+  "/auth/signout": "pages/auth/signout.js",
+  "/auth/signup": "pages/auth/signup.js",
+  "/cart/mycart": "pages/cart/mycart.js",
+  "/components/header": "pages/components/header.js",
+  "/hooks/useRequest": "pages/hooks/useRequest.js",
   "/": "pages/index.js",
-  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js"
+  "/items/[itemId]": "pages/items/[itemId].js",
+  "/items/new": "pages/items/new.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js"
 }

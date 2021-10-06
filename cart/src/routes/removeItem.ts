@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction, response } from "express";
 import { Cart } from "../models/Cart";
-import { Item } from "../models/Item";
-import { BadRequestError, NotFoundError, requireAuth } from "@jugitix/common";
+import { BadRequestError, requireAuth } from "@jugitix/common";
 const router = express.Router();
 
 router.delete(

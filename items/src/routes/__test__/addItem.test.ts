@@ -1,7 +1,5 @@
 import request from "supertest";
-import mongoose from "mongoose";
 import { app } from "../../app";
-import { Item } from "../../models/Item";
 
 it("add items and returns 200", async () => {
   const response = await request(app)

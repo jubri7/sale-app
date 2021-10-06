@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { BadRequestError, NotFoundError, requireAuth } from "@jugitix/common";
+import { BadRequestError, requireAuth } from "@jugitix/common";
 import { Cart } from "../models/Cart";
 import { Item } from "../models/Item";
 const router = express.Router();
@@ -12,7 +12,7 @@ router.get(
       const cart = await Cart.findOne({ userId: req.currentUser!.id }).populate(
         "items"
       );
-      if (!cart) throw new NotFoundError();
+      if (!cart) throw new BadRequestError("Cart not found");
 
       cart.items.filter(async (itemId) => {
         let item = await Item.findById(itemId);

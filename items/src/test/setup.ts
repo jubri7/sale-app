@@ -2,8 +2,6 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-import { app } from "../app";
-
 declare global {
   var signin: (id?: string) => string[];
 }
